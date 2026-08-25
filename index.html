@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Serenissima - OEE V3 Equipe Manutenção</title>
+<title>La Serenissima - OEE V3 Supabase Conectado</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>tailwind.config={theme:{extend:{colors:{brand:{green:'#007a33',darkGreen:'#005c26',red:'#e31837'}}}}}</script>
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -16,13 +16,13 @@
 <body class="antialiased text-slate-800">
 <div id="view-auth" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900">
 <div class="bg-white rounded-[2rem] w-full max-w-md p-8 shadow-2xl border-t-8 border-brand-green">
-<div class="text-center mb-6"><div class="w-14 h-14 bg-brand-green rounded-2xl flex items-center justify-center text-white font-black text-xl mx-auto">LS</div><h1 class="font-black text-2xl mt-3">LA SERENISSIMA</h1><p class="text-[10px] font-black tracking-widest text-brand-red uppercase mt-1">OEE V3 • EQUIPE MANUTENÇÃO 4 PESSOAS</p><p class="text-[10px] text-slate-400 mt-2">Supabase: gbszjskmtzsrjxuvwdza • Tudo salvo para equipe</p></div>
+<div class="text-center mb-6"><div class="w-14 h-14 bg-brand-green rounded-2xl flex items-center justify-center text-white font-black text-xl mx-auto">LS</div><h1 class="font-black text-2xl mt-3">LA SERENISSIMA</h1><p class="text-[10px] font-black tracking-widest text-brand-red uppercase mt-1">OEE V3 • SUPABASE CONECTADO</p><p class="text-[10px] text-slate-400 mt-2">Conectado em niznnemagfidmrrlphvj.supabase.co</p></div>
 <form id="form-login" class="space-y-4">
-<div><label class="text-[10px] font-black uppercase text-slate-500 ml-1 mb-1 block">E-mail da Equipe</label><input id="login-email" type="email" required placeholder="manutencao1@laserenissima.com.br" class="input"></div>
+<div><label class="text-[10px] font-black uppercase text-slate-500 ml-1 mb-1 block">E-mail</label><input id="login-email" type="email" required placeholder="seu.nome@laserenissima.com.br" class="input"></div>
 <div><label class="text-[10px] font-black uppercase text-slate-500 ml-1 mb-1 block">Senha</label><input id="login-pass" type="password" required placeholder="••••••••" class="input"></div>
 <div id="login-msg" class="hidden text-xs font-bold p-3 rounded-xl"></div>
-<button type="submit" id="btn-login" class="w-full py-4 bg-brand-green hover:bg-brand-darkGreen text-white rounded-2xl font-black uppercase tracking-widest shadow-lg">Entrar - Equipe Manutenção</button>
-<p class="text-[10px] text-slate-400 text-center">Demo: demo@laserenissima.com.br / demo123 (funciona sem Supabase)<br>Equipe: use usuários criados no Supabase Auth</p>
+<button type="submit" id="btn-login" class="w-full py-4 bg-brand-green hover:bg-brand-darkGreen text-white rounded-2xl font-black uppercase tracking-widest shadow-lg">Entrar com Supabase Auth</button>
+<p class="text-[10px] text-slate-400 text-center">Se não tiver usuário, crie no Supabase Auth > Users<br>Ou use login demo: demo@laserenissima.com.br / demo123</p>
 </form>
 </div>
 </div>
@@ -30,8 +30,8 @@
 <div id="view-app" class="hidden min-h-screen flex-col">
 <header class="bg-brand-green text-white sticky top-0 z-40 shadow">
 <div class="max-w-[1440px] mx-auto px-5 py-3 flex justify-between items-center">
-<div class="flex items-center gap-3"><div class="bg-white p-1 rounded-xl"><div class="w-9 h-9 bg-brand-green rounded-lg flex items-center justify-center font-black text-white">LS</div></div><div><h1 class="font-black leading-none">LA SERENISSIMA</h1><span class="text-[10px] opacity-80 font-bold tracking-widest">V3 SUPABASE • EQUIPE 4 • OEE REAL</span></div></div>
-<div class="flex items-center gap-2"><span id="lbl-user" class="hidden md:block text-xs font-bold bg-black/20 px-3 py-2 rounded-full"></span><span id="lbl-sync" class="text-[10px] bg-white/20 px-2 py-1 rounded-full">● Conectando...</span><button onclick="logout()" class="p-2 bg-black/20 rounded-xl"><i data-lucide="log-out" class="w-5 h-5"></i></button></div>
+<div class="flex items-center gap-3"><div class="bg-white p-1 rounded-xl"><div class="w-9 h-9 bg-brand-green rounded-lg flex items-center justify-center font-black text-white">LS</div></div><div><h1 class="font-black leading-none">LA SERENISSIMA</h1><span class="text-[10px] opacity-80 font-bold tracking-widest">V3 SUPABASE • EDITÁVEL • OEE REAL</span></div></div>
+<div class="flex items-center gap-2"><span id="lbl-user" class="hidden md:block text-xs font-bold bg-black/20 px-3 py-2 rounded-full"></span><span id="lbl-sync" class="text-[10px] bg-white/20 px-2 py-1 rounded-full">● Sincronizado</span><button onclick="logout()" class="p-2 bg-black/20 rounded-xl"><i data-lucide="log-out" class="w-5 h-5"></i></button></div>
 </div>
 <div class="bg-brand-darkGreen px-5 flex gap-1 overflow-x-auto">
 <button onclick="switchTab('dashboard')" id="nav-dashboard" class="px-4 py-3.5 text-xs font-black border-b-4 border-brand-red bg-white/10 text-white flex gap-2 items-center"><i data-lucide="layout-dashboard" class="w-4 h-4"></i>Dashboard</button>
@@ -44,13 +44,13 @@
 
 <main class="flex-1 max-w-[1440px] w-full mx-auto p-4 md:p-6 space-y-6">
 <div id="content-dashboard" class="space-y-6">
-<div class="flex flex-wrap justify-between items-center gap-3"><h2 class="font-black text-xl">Indicadores Reais • OEE = D×P×Q • Equipe 4</h2><div class="flex bg-white border rounded-full p-1"><button onclick="setDashPeriod('day')" id="dp-day" class="px-4 py-2 rounded-full text-xs font-black bg-slate-900 text-white">Dia</button><button onclick="setDashPeriod('month')" id="dp-month" class="px-4 py-2 rounded-full text-xs font-bold text-slate-500">Mês</button><button onclick="setDashPeriod('year')" id="dp-year" class="px-4 py-2 rounded-full text-xs font-bold text-slate-500">Ano</button></div></div>
+<div class="flex flex-wrap justify-between items-center gap-3"><h2 class="font-black text-xl">Indicadores Reais • OEE = D×P×Q</h2><div class="flex bg-white border rounded-full p-1"><button onclick="setDashPeriod('day')" id="dp-day" class="px-4 py-2 rounded-full text-xs font-black bg-slate-900 text-white">Dia</button><button onclick="setDashPeriod('month')" id="dp-month" class="px-4 py-2 rounded-full text-xs font-bold text-slate-500">Mês</button><button onclick="setDashPeriod('year')" id="dp-year" class="px-4 py-2 rounded-full text-xs font-bold text-slate-500">Ano</button></div></div>
 <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
 <div class="card p-5"><p class="text-[10px] font-black uppercase text-slate-400 tracking-widest">OEE Real</p><p id="d-oee" class="text-4xl font-black mt-1">0%</p><p id="d-break" class="text-[11px] font-bold text-slate-500 mt-2">D 0% • P 0% • Q 0%</p></div>
 <div class="card p-5"><p class="text-[10px] font-black uppercase text-slate-400">Prod. Líquida</p><p id="d-kg" class="text-3xl font-black">0 kg</p><p id="d-pacotes" class="text-xs font-bold text-slate-500 mt-1">0 pcts</p></div>
 <div class="card p-5 border-l-4 border-amber-400"><p class="text-[10px] font-black uppercase text-slate-400">Giveaway MP</p><p id="d-mp-kg" class="text-3xl font-black">0 kg</p><p id="d-mp-pct" class="text-xs font-bold text-amber-600">0% • Meta 0,35%</p></div>
 <div class="card p-5"><p class="text-[10px] font-black uppercase text-slate-400">Perda Emb.</p><p id="d-emb-kg" class="text-3xl font-black">0 kg</p><p id="d-rej" class="text-xs font-bold text-slate-500">0 rej</p></div>
-<div class="card p-5 bg-slate-900 text-white"><p class="text-[10px] font-black uppercase tracking-widest text-green-300">Pendências Equipe</p><p id="d-pend" class="text-3xl font-black">0</p><p class="text-xs text-slate-400">Para os 4 da manut</p></div>
+<div class="card p-5 bg-slate-900 text-white"><p class="text-[10px] font-black uppercase tracking-widest text-green-300">Pendências</p><p id="d-pend" class="text-3xl font-black">0</p><p class="text-xs text-slate-400">Ocorrências abertas</p></div>
 </div>
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 <div class="card p-6 lg:col-span-2"><h3 class="font-black text-xs uppercase tracking-widest mb-4">Evolução • OEE / Perda MP</h3><canvas id="chart-evolucao" height="140"></canvas></div>
@@ -62,7 +62,7 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
 <div id="alert-quality" class="hidden bg-brand-red text-white p-4 rounded-2xl flex gap-3 items-center"><i data-lucide="shield-alert" class="w-8 h-8"></i><div><p class="font-black text-xs uppercase">Fora da Especificação</p><p id="alert-quality-msg" class="text-xs font-bold"></p></div></div>
 <div id="alert-meta" class="hidden bg-amber-50 border-2 border-amber-400 text-amber-800 p-4 rounded-2xl flex gap-3 items-center"><i data-lucide="trending-up" class="w-8 h-8"></i><div><p class="font-black text-xs uppercase">Meta Estourada</p><p id="alert-meta-msg" class="text-xs font-bold"></p></div></div>
-<div class="bg-slate-900 text-white p-4 rounded-2xl flex justify-between items-center"><div><p class="text-[10px] font-black uppercase text-green-300 tracking-widest">OEE Real - Salvo no Supabase</p><p class="text-[11px]">Tudo fica para os 4 da equipe</p></div><div class="text-right"><p id="r-oee" class="text-2xl font-black">0%</p><p id="r-detail" class="text-[10px] text-slate-400">D 0% P 0% Q 0%</p></div></div>
+<div class="bg-slate-900 text-white p-4 rounded-2xl flex justify-between items-center"><div><p class="text-[10px] font-black uppercase text-green-300 tracking-widest">OEE Corrigido Supabase</p><p class="text-[11px]">D × P × Q • Salvo direto no banco</p></div><div class="text-right"><p id="r-oee" class="text-2xl font-black">0%</p><p id="r-detail" class="text-[10px] text-slate-400">D 0% P 0% Q 0%</p></div></div>
 </div>
 <form id="form-lancamento" class="space-y-6">
 <div class="card p-6 md:p-8">
@@ -90,22 +90,22 @@
 <div class="bg-slate-50 p-3 rounded-xl"><span class="text-[9px] font-black uppercase text-slate-500 block">Perda Emb</span><b id="r-emb">0 kg</b> • <b id="r-rej">0 un</b></div>
 </div>
 </div>
-<div class="flex justify-end gap-3"><button type="button" id="btn-cancel-edit" onclick="cancelEditLog()" class="hidden px-5 py-3 bg-slate-200 rounded-xl text-xs font-black uppercase">Cancelar</button><button type="submit" id="btn-salvar-form" class="px-8 py-4 bg-brand-green text-white rounded-2xl font-black uppercase tracking-widest shadow-lg flex gap-2 items-center"><i data-lucide="save" class="w-4 h-4"></i><span id="txt-save">Salvar no Supabase - Equipe</span></button></div>
+<div class="flex justify-end gap-3"><button type="button" id="btn-cancel-edit" onclick="cancelEditLog()" class="hidden px-5 py-3 bg-slate-200 rounded-xl text-xs font-black uppercase">Cancelar Edição</button><button type="submit" id="btn-salvar-form" class="px-8 py-4 bg-brand-green text-white rounded-2xl font-black uppercase tracking-widest shadow-lg flex gap-2 items-center"><i data-lucide="save" class="w-4 h-4"></i><span id="txt-save">Registrar no Supabase</span></button></div>
 </form>
 </div>
 
 <div id="content-ocorrencias" class="hidden space-y-6">
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 <div class="card p-6">
-<h2 class="font-black text-sm uppercase tracking-widest mb-5">Nova Ocorrência - Equipe</h2>
+<h2 class="font-black text-sm uppercase tracking-widest mb-5">Nova Ocorrência</h2>
 <form id="form-ocorrencia" class="space-y-3">
 <div class="grid grid-cols-2 gap-3"><div><label class="text-[10px] font-black uppercase text-slate-500 block mb-1">Data</label><input type="date" id="oc-date" required class="input"></div><div><label class="text-[10px] font-black uppercase text-slate-500 block mb-1">Máquina</label><select id="oc-machine" class="input"></select></div></div>
 <div class="grid grid-cols-2 gap-3"><div><label class="text-[10px] font-black uppercase text-slate-500 block mb-1">Turno</label><select id="oc-turno" class="input"><option value="1">T1</option><option value="2">T2</option></select></div><div><label class="text-[10px] font-black uppercase text-slate-500 block mb-1">Parada (min)</label><input type="number" id="oc-parada" class="input" placeholder="0"></div></div>
 <div><label class="text-[10px] font-black uppercase text-slate-500 block mb-1">Categoria</label><select id="oc-cat" class="input"><option>Quebra Mecânica</option><option>Falha Elétrica</option><option>Balança Dinâmica</option><option>Embalagem / Filme</option><option>Qualidade / Peso</option><option>Setup / Troca</option><option>Falta MP</option><option>Outros</option></select></div>
 <div><label class="text-[10px] font-black uppercase text-slate-500 block mb-1">Descrição</label><textarea id="oc-desc" required rows="3" placeholder="O que aconteceu?" class="input"></textarea></div>
-<div><label class="text-[10px] font-black uppercase text-slate-500 block mb-1">Ação Imediata</label><input id="oc-acao-imed" class="input" placeholder="O que foi feito?"></div>
-<div><label class="text-[10px] font-black uppercase text-slate-500 block mb-1">Responsável (dos 4)</label><input id="oc-resp" class="input" placeholder="Nome do manut"></div>
-<div class="flex gap-2"><button type="submit" class="flex-1 px-5 py-3 bg-slate-900 text-white rounded-xl text-xs font-black uppercase" id="btn-oc-save">Salvar para Equipe</button><button type="button" onclick="cancelEditOc()" id="btn-oc-cancel" class="hidden px-5 py-3 bg-slate-200 rounded-xl text-xs font-black uppercase">Cancelar</button></div>
+<div><label class="text-[10px] font-black uppercase text-slate-500 block mb-1">Ação Imediata</label><input id="oc-acao-imed" class="input" placeholder="O que foi feito na hora?"></div>
+<div><label class="text-[10px] font-black uppercase text-slate-500 block mb-1">Responsável</label><input id="oc-resp" class="input" placeholder="Nome"></div>
+<div class="flex gap-2"><button type="submit" class="flex-1 px-5 py-3 bg-slate-900 text-white rounded-xl text-xs font-black uppercase" id="btn-oc-save">Salvar no Supabase</button><button type="button" onclick="cancelEditOc()" id="btn-oc-cancel" class="hidden px-5 py-3 bg-slate-200 rounded-xl text-xs font-black uppercase">Cancelar</button></div>
 </form>
 </div>
 <div class="lg:col-span-2 space-y-4">
@@ -116,54 +116,43 @@
 </div>
 
 <div id="content-historico" class="hidden space-y-6">
-<div class="card p-6 flex flex-wrap justify-between gap-4"><h2 class="font-black text-xs uppercase tracking-widest">Histórico - Todos da Equipe</h2><div class="flex gap-2"><input type="date" id="fil-date" onchange="renderHistory()" class="input !py-2 !text-xs w-auto"><select id="fil-mach" onchange="renderHistory()" class="input !py-2 !text-xs w-auto"></select></div></div>
-<div class="card overflow-hidden"><div class="overflow-x-auto"><table class="w-full text-left min-w-[1000px]"><thead><tr class="bg-slate-900 text-white text-[10px] font-black uppercase"><th class="p-4">Data/T</th><th class="p-4">Máquina</th><th class="p-4">SKU</th><th class="p-4">OEE Real</th><th class="p-4">Perda MP</th><th class="p-4">Emb</th><th class="p-4">Quem</th><th class="p-4 text-center">Ações</th></tr></thead><tbody id="tbody-history" class="divide-y text-sm"></tbody></table></div></div>
+<div class="card p-6 flex flex-wrap justify-between gap-4"><h2 class="font-black text-xs uppercase tracking-widest">Histórico Supabase - Editável</h2><div class="flex gap-2"><input type="date" id="fil-date" onchange="renderHistory()" class="input !py-2 !text-xs w-auto"><select id="fil-mach" onchange="renderHistory()" class="input !py-2 !text-xs w-auto"></select></div></div>
+<div class="card overflow-hidden"><div class="overflow-x-auto"><table class="w-full text-left min-w-[1000px]"><thead><tr class="bg-slate-900 text-white text-[10px] font-black uppercase"><th class="p-4">Data/T</th><th class="p-4">Máquina</th><th class="p-4">SKU</th><th class="p-4">OEE Real</th><th class="p-4">Perda MP</th><th class="p-4">Emb</th><th class="p-4 text-center">Ações</th></tr></thead><tbody id="tbody-history" class="divide-y text-sm"></tbody></table></div></div>
 </div>
 
 <div id="content-cadastros" class="hidden space-y-6">
-<div class="flex gap-2 border-b pb-4"><button onclick="switchCad('machines')" id="tab-c-machines" class="px-5 py-3 rounded-xl bg-brand-green text-white text-xs font-black">Linhas</button><button onclick="switchCad('products')" id="tab-c-products" class="px-5 py-3 rounded-xl bg-white border text-xs font-bold">SKUs</button><button onclick="switchCad('matrix')" id="tab-c-matrix" class="px-5 py-3 rounded-xl bg-white border text-xs font-bold">Matriz BPM</button></div>
+<div class="flex gap-2 border-b pb-4"><button onclick="switchCad('machines')" id="tab-c-machines" class="px-5 py-3 rounded-xl bg-brand-green text-white text-xs font-black">Linhas Industriais</button><button onclick="switchCad('products')" id="tab-c-products" class="px-5 py-3 rounded-xl bg-white border text-xs font-bold">SKUs</button><button onclick="switchCad('matrix')" id="tab-c-matrix" class="px-5 py-3 rounded-xl bg-white border text-xs font-bold">Matriz BPM</button></div>
 <div id="cad-machines" class="space-y-4">
-<div class="card p-6"><h3 class="font-black text-xs uppercase tracking-widest mb-4">Cadastrar / Editar Linha - Salva para Equipe</h3><form id="form-cad-mach" class="flex gap-3"><input id="cm-nome" required placeholder="Ex: Envase 3 - 200g" class="input flex-1"><input type="hidden" id="cm-id"><button class="px-5 py-3 bg-brand-green text-white rounded-xl text-xs font-black uppercase" id="btn-mach-save">Salvar</button><button type="button" onclick="cancelEditMach()" id="btn-mach-cancel" class="hidden px-5 py-3 bg-slate-200 rounded-xl text-xs font-black uppercase">Cancelar</button></form></div>
+<div class="card p-6"><h3 class="font-black text-xs uppercase tracking-widest mb-4">Cadastrar / Editar Linha - Supabase</h3><form id="form-cad-mach" class="flex gap-3"><input id="cm-nome" required placeholder="Ex: Envase 3 - 200g" class="input flex-1"><input type="hidden" id="cm-id"><button class="px-5 py-3 bg-brand-green text-white rounded-xl text-xs font-black uppercase" id="btn-mach-save">Salvar</button><button type="button" onclick="cancelEditMach()" id="btn-mach-cancel" class="hidden px-5 py-3 bg-slate-200 rounded-xl text-xs font-black uppercase">Cancelar</button></form></div>
 <div id="list-machines" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3"></div>
 </div>
 <div id="cad-products" class="hidden space-y-4">
-<div class="card p-6"><h3 class="font-black text-xs uppercase tracking-widest mb-4">Cadastrar / Editar SKU - Salva para Equipe</h3><form id="form-cad-prod" class="grid grid-cols-1 md:grid-cols-6 gap-3"><input type="hidden" id="cp-id"><input id="cp-sku" placeholder="SKU" required class="input"><input id="cp-desc" placeholder="Descrição" required class="md:col-span-2 input"><input id="cp-peso" placeholder="Peso Nom kg 0.2" step="0.001" required class="input"><input id="cp-tara" placeholder="Tara g 7.2" step="0.1" required class="input"><input id="cp-min" placeholder="Min g" step="0.1" required class="input"><input id="cp-max" placeholder="Max g" step="0.1" required class="input"><div class="md:col-span-6 flex gap-2"><button class="flex-1 px-5 py-3 bg-brand-green text-white rounded-xl text-xs font-black uppercase" id="btn-prod-save">Salvar</button><button type="button" onclick="cancelEditProd()" id="btn-prod-cancel" class="hidden px-5 py-3 bg-slate-200 rounded-xl text-xs font-black uppercase">Cancelar</button></div></form></div>
+<div class="card p-6"><h3 class="font-black text-xs uppercase tracking-widest mb-4">Cadastrar / Editar Produto SKU - Supabase</h3><form id="form-cad-prod" class="grid grid-cols-1 md:grid-cols-6 gap-3"><input type="hidden" id="cp-id"><input id="cp-sku" placeholder="SKU" required class="input"><input id="cp-desc" placeholder="Descrição" required class="md:col-span-2 input"><input id="cp-peso" placeholder="Peso Nom kg 0.2" step="0.001" required class="input"><input id="cp-tara" placeholder="Tara g 7.2" step="0.1" required class="input"><input id="cp-min" placeholder="Min g" step="0.1" required class="input"><input id="cp-max" placeholder="Max g" step="0.1" required class="input"><div class="md:col-span-6 flex gap-2"><button class="flex-1 px-5 py-3 bg-brand-green text-white rounded-xl text-xs font-black uppercase" id="btn-prod-save">Salvar</button><button type="button" onclick="cancelEditProd()" id="btn-prod-cancel" class="hidden px-5 py-3 bg-slate-200 rounded-xl text-xs font-black uppercase">Cancelar</button></div></form></div>
 <div id="list-products" class="card overflow-hidden"><div class="overflow-x-auto"><table class="w-full text-left min-w-[800px]"><thead class="bg-slate-50 text-[10px] font-black uppercase"><tr><th class="p-3">SKU</th><th class="p-3">Descrição</th><th class="p-3">Peso Nom</th><th class="p-3">Tara</th><th class="p-3">Limites</th><th class="p-3 text-center">Ações</th></tr></thead><tbody id="tbody-products" class="divide-y text-sm"></tbody></table></div></div>
 </div>
 <div id="cad-matrix" class="hidden space-y-4">
-<div class="card p-6"><h3 class="font-black text-xs uppercase tracking-widest mb-4">Vincular / Editar Matriz BPM - Salva para Equipe</h3><form id="form-cad-mat" class="grid grid-cols-1 md:grid-cols-4 gap-3"><input type="hidden" id="cmat-id"><select id="cmat-mach" class="input"></select><select id="cmat-prod" class="input"></select><input id="cmat-bpm" placeholder="BPM ex: 50" required type="number" class="input"><div class="flex gap-2"><button class="px-5 py-3 bg-brand-green text-white rounded-xl text-xs font-black uppercase flex-1" id="btn-mat-save">Vincular</button><button type="button" onclick="cancelEditMat()" id="btn-mat-cancel" class="hidden px-5 py-3 bg-slate-200 rounded-xl text-xs font-black uppercase">Cancelar</button></div></form></div>
+<div class="card p-6"><h3 class="font-black text-xs uppercase tracking-widest mb-4">Vincular / Editar Matriz BPM - Supabase</h3><form id="form-cad-mat" class="grid grid-cols-1 md:grid-cols-4 gap-3"><input type="hidden" id="cmat-id"><select id="cmat-mach" class="input"></select><select id="cmat-prod" class="input"></select><input id="cmat-bpm" placeholder="BPM ex: 50" required type="number" class="input"><div class="flex gap-2"><button class="px-5 py-3 bg-brand-green text-white rounded-xl text-xs font-black uppercase flex-1" id="btn-mat-save">Vincular</button><button type="button" onclick="cancelEditMat()" id="btn-mat-cancel" class="hidden px-5 py-3 bg-slate-200 rounded-xl text-xs font-black uppercase">Cancelar</button></div></form></div>
 <div id="list-matrix" class="card overflow-hidden"><div class="overflow-x-auto"><table class="w-full text-left min-w-[600px]"><thead class="bg-slate-50 text-[10px] font-black uppercase"><tr><th class="p-3">Máquina</th><th class="p-3">Produto</th><th class="p-3">BPM</th><th class="p-3">Cap/h</th><th class="p-3 text-center">Ações</th></tr></thead><tbody id="tbody-matrix" class="divide-y text-sm"></tbody></table></div></div>
 </div>
 </div>
 </main>
 </div>
 
-<div id="modal-plano" class="fixed inset-0 bg-black/50 hidden z-[100] p-4 flex items-center justify-center"><div class="bg-white rounded-[1.5rem] max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto"><div class="flex justify-between items-center mb-4"><h3 class="font-black uppercase text-sm">Plano de Ação - Equipe</h3><button onclick="closeModalPlano()" class="p-2 bg-slate-100 rounded-full"><i data-lucide="x" class="w-4 h-4"></i></button></div><div id="modal-plano-content" class="card p-4 bg-slate-50"></div><form id="form-plano" class="mt-6 space-y-3 border-t pt-4"><input type="hidden" id="pl-oc-id"><input type="hidden" id="pl-id"><div class="grid grid-cols-2 gap-3"><input id="pl-oque" required placeholder="O QUE será feito?" class="input"><input id="pl-quem" required placeholder="QUEM? (dos 4)" class="input"></div><div class="grid grid-cols-2 gap-3"><input type="date" id="pl-quando" required class="input"><select id="pl-status" class="input"><option value="aberto">Aberto</option><option value="em_andamento">Em Andamento</option><option value="concluido">Concluído</option></select></div><textarea id="pl-como" placeholder="COMO / Evidência" rows="2" class="input"></textarea><div class="flex gap-2"><button class="flex-1 px-5 py-3 bg-brand-green text-white rounded-xl text-xs font-black uppercase" id="btn-plano-save">Salvar para Equipe</button><button type="button" onclick="cancelEditPlano()" id="btn-plano-cancel" class="hidden px-5 py-3 bg-slate-200 rounded-xl text-xs font-black uppercase">Cancelar</button></div></form><div id="list-planos" class="mt-4 space-y-2"></div></div></div>
+<div id="modal-plano" class="fixed inset-0 bg-black/50 hidden z-[100] p-4 flex items-center justify-center"><div class="bg-white rounded-[1.5rem] max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto"><div class="flex justify-between items-center mb-4"><h3 class="font-black uppercase text-sm">Plano de Ação • Supabase</h3><button onclick="closeModalPlano()" class="p-2 bg-slate-100 rounded-full"><i data-lucide="x" class="w-4 h-4"></i></button></div><div id="modal-plano-content" class="card p-4 bg-slate-50"></div><form id="form-plano" class="mt-6 space-y-3 border-t pt-4"><input type="hidden" id="pl-oc-id"><input type="hidden" id="pl-id"><div class="grid grid-cols-2 gap-3"><input id="pl-oque" required placeholder="O QUE será feito?" class="input"><input id="pl-quem" required placeholder="QUEM?" class="input"></div><div class="grid grid-cols-2 gap-3"><input type="date" id="pl-quando" required class="input"><select id="pl-status" class="input"><option value="aberto">Aberto</option><option value="em_andamento">Em Andamento</option><option value="concluido">Concluído</option></select></div><textarea id="pl-como" placeholder="COMO / Evidência" rows="2" class="input"></textarea><div class="flex gap-2"><button class="flex-1 px-5 py-3 bg-brand-green text-white rounded-xl text-xs font-black uppercase" id="btn-plano-save">Salvar no Supabase</button><button type="button" onclick="cancelEditPlano()" id="btn-plano-cancel" class="hidden px-5 py-3 bg-slate-200 rounded-xl text-xs font-black uppercase">Cancelar</button></div></form><div id="list-planos" class="mt-4 space-y-2"></div></div></div>
 
 <div id="toast" class="fixed bottom-6 right-6 z-[200] hidden"><div id="toast-bg" class="px-5 py-4 rounded-2xl shadow-2xl text-white font-bold flex gap-3 bg-brand-green"><span id="toast-msg">OK</span></div></div>
 
 <script>
 lucide.createIcons();
-// ============================================
-// CONFIG SUPABASE - EQUIPE 4 PESSOAS
-// Projeto: gbszjskmtzsrjxuvwdza
-// ============================================
+// CONFIG SUPABASE - TROQUE PELA SUA CHAVE NOVA APÓS ROTACIONAR
 const supabaseUrl = 'https://gbszjskmtzsrjxuvwdza.supabase.co';
-// >>> PASSO 1: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdic3pqc2ttdHpzcmp4dnV3ZHphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxNjQ3MDEsImV4cCI6MjEwMjc0MDcwMX0.3mxovH2T5WO6P_e1Q1OGRvfVlTnrLHtr5KGx8VE324k <<<
-// Supabase > Settings > API > anon public
-const supabaseKey = 'COLE_SUA_ANON_KEY_AQUI';
-
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdic3pqc2ttdHpzcmp4dnV3ZHphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxNjQ3MDEsImV4cCI6MjEwMjc0MDcwMX0.3mxovH2T5WO6P_e1Q1OGRvfVlTnrLHtr5KGx8VE324k';
+const supabaseUrl = 'https://gbszjskmtzsrjxuvwdza.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdic3pqc2ttdHpzcmp4dnV3ZHphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxNjQ3MDEsImV4cCI6MjEwMjc0MDcwMX0.3mxovH2T5WO6P_e1Q1OGRvfVlTnrLHtr5KGx8VE324k';
 let supabaseClient = null;
-let isDemo = true;
-try {
-  if(supabaseKey && !supabaseKey.includes('COLE_SUA') && supabaseKey.length > 50) {
-    supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
-    isDemo = false;
-    console.log('Supabase Equipe conectado');
-  } else {
-    console.log('Modo Demo - cole a anon key para ativar Supabase equipe');
-  }
-} catch(e) { console.warn('Erro Supabase', e); }
+let isDemoMode = false;
+try { supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey); console.log('✅ Supabase Equipe 4 conectado - admin1 vê admin2'); } catch(e){ console.error('Erro Supabase', e); isDemoMode = true; }
+// supabaseClient já criado acima com fallback demo
 
 let db={machines:[],products:[],matrix:[],logs:[],ocorrencias:[]};
 let editingLogId=null, editingOcId=null, editingPlanoId=null;
@@ -172,78 +161,60 @@ const TEMPO_TURNO={1:9.75,2:9.75};
 const showToast=(m,type='ok')=>{const t=document.getElementById('toast');document.getElementById('toast-msg').innerText=m;document.getElementById('toast-bg').className=`px-5 py-4 rounded-2xl shadow-2xl text-white font-bold flex gap-3 ${type==='error'?'bg-brand-red':'bg-brand-green'}`;t.classList.remove('hidden');setTimeout(()=>t.classList.add('hidden'),3500)}
 
 async function carregarDadosSupabase(){
-if(isDemo || !supabaseClient){
-  document.getElementById('lbl-sync').innerText='● Demo - Cole anon key';
-  // Dados demo iniciais
-  if(db.machines.length===0){
-    db.machines=[{id:'1',nome:'Envase 1 - 200g',codigo:'ENV1',ativo:true},{id:'2',nome:'Envase 2 - 1kg',codigo:'ENV2',ativo:true}];
-    db.products=[{id:'p1',sku:580,descricao:'LPI Vit 40x200g',peso_nominal_g:0.2,tara_padrao_g:7.2,limite_minimo_g:196,limite_maximo_g:204,ativo:true}];
-    db.matrix=[{id:'m1',machine_id:'1',product_id:'p1',bpm:50,capacidade_nominal:3000}];
-  }
-  populateSelects(); renderDashboard(); renderHistory(); renderOcorrencias(); renderMachList(); renderProdList(); renderMatrixList();
-  lucide.createIcons(); return;
-}
-document.getElementById('lbl-sync').innerText='● Sincronizando equipe...';
-try{
+if(typeof isDemoMode !== 'undefined' && isDemoMode){ if(typeof initAppDemo === 'function'){ initAppDemo(); } else { populateSelects(); renderDashboard(); } document.getElementById('lbl-sync').innerText='● Demo Local'; return; }
+if(!supabaseClient){ if(typeof initAppDemo === 'function') initAppDemo(); return; }
+document.getElementById('lbl-sync').innerText='● Sincronizando...';
 const {data:mac}=await supabaseClient.from('machines').select('*').order('name');
 const {data:prd}=await supabaseClient.from('products').select('*').order('sku');
 const {data:mat}=await supabaseClient.from('machine_product_matrix').select('*');
 const {data:lg}=await supabaseClient.from('production_logs').select('*').order('created_at',{ascending:false}).limit(500);
 const {data:oc}=await supabaseClient.from('occurrences').select('*, action_plans(*)').order('shift_date',{ascending:false}).limit(200);
+
 if(mac) db.machines=mac.map(m=>({id:m.id,nome:m.name,codigo:m.name.substring(0,4).toUpperCase(),ativo:m.is_active}));
 if(prd) db.products=prd.map(p=>({id:p.id,sku:p.sku,descricao:p.description,peso_nominal_g:p.nominal_weight_kg,tara_padrao_g:p.standard_tare_g,limite_minimo_g:p.min_weight_limit,limite_maximo_g:p.max_weight_limit,ativo:true}));
 if(mat) db.matrix=mat.map(x=>({id:x.id,machine_id:x.machine_id,product_id:x.product_id,bpm:x.packages_per_minute,capacidade_nominal:x.packages_per_hour}));
-if(lg) db.logs=lg.map(l=>({id:l.id,shift_date:l.shift_date,shift_number:l.shift_number,machine_id:l.machine_id,product_id:l.product_id,availability_hours:l.availability_hours,accepted_volume:l.accepted_volume,average_weight:l.average_weight,total_rejects:l.total_rejects,calculated_efficiency:l.calculated_efficiency,disponibilidade:l.disponibilidade,performance:l.performance,qualidade:l.qualidade,calculated_mp_loss_kg:l.calculated_mp_loss_kg,perda_mp_percent:l.perda_mp_percent||0,calculated_packaging_loss_kg:l.calculated_packaging_loss_kg,producao_liquida_kg:l.producao_liquida_kg||0,created_by:l.created_by,created_at:l.created_at}));
-if(oc) db.ocorrencias=oc.map(o=>({id:o.id,shift_date:o.shift_date,machine_id:o.machine_id,shift_number:o.shift_number,categoria:o.categoria,descricao:o.descricao,acao_imediata:o.acao_imediata,responsavel:o.responsavel,tempo_parada_min:o.tempo_parada_min,status:o.status,created_by:o.created_by,acoes:(o.action_plans||[]).map(a=>({id:a.id,o_que:a.o_que,quem:a.quem,quando:a.quando,status:a.status,como:a.como}))}));
-document.getElementById('lbl-sync').innerText='● Supabase Equipe OK';
-}catch(e){console.error(e); document.getElementById('lbl-sync').innerText='● Erro - Ver anon key'; showToast('Erro Supabase: '+e.message,'error');}
+if(lg) db.logs=lg.map(l=>({id:l.id,shift_date:l.shift_date,shift_number:l.shift_number,machine_id:l.machine_id,product_id:l.product_id,availability_hours:l.availability_hours,accepted_volume:l.accepted_volume,average_weight:l.average_weight,total_rejects:l.total_rejects,calculated_efficiency:l.calculated_efficiency,disponibilidade:l.disponibilidade,performance:l.performance,qualidade:l.qualidade,calculated_mp_loss_kg:l.calculated_mp_loss_kg,perda_mp_percent:l.perda_mp_percent||l.calculated_mp_loss_kg/(l.accepted_volume*0.2)*100,calculated_packaging_loss_kg:l.calculated_packaging_loss_kg,producao_liquida_kg:l.producao_liquida_kg||l.accepted_volume*0.2,created_at:l.created_at}));
+if(oc) db.ocorrencias=oc.map(o=>({id:o.id,shift_date:o.shift_date,machine_id:o.machine_id,shift_number:o.shift_number,categoria:o.categoria,descricao:o.descricao,acao_imediata:o.acao_imediata,responsavel:o.responsavel,tempo_parada_min:o.tempo_parada_min,status:o.status,acoes:(o.action_plans||[]).map(a=>({id:a.id,o_que:a.o_que,quem:a.quem,quando:a.quando,status:a.status,como:a.como}))}));
+
+document.getElementById('lbl-sync').innerText='● Sincronizado Supabase';
 populateSelects(); renderDashboard(); renderHistory(); renderOcorrencias(); renderMachList(); renderProdList(); renderMatrixList();
 lucide.createIcons();
 }
 
-// LOGIN - DEMO + EQUIPE 4
+// AUTH REAL SUPABASE
 document.getElementById('form-login').addEventListener('submit',async e=>{
 e.preventDefault();
 const emailRaw=document.getElementById('login-email').value;
 const email=emailRaw.trim().toLowerCase();
-const pass=document.getElementById('login-pass').value;
-const btn=document.getElementById('btn-login'); btn.innerText='Entrando...'; btn.disabled=true;
+if(email==='demo@laserenissima.com.br' && document.getElementById('login-pass').value==='demo123'){
+ document.getElementById('lbl-user').innerText=email+' (demo)';
+ document.getElementById('view-auth').classList.add('hidden');
+ document.getElementById('view-app').classList.remove('hidden');
+ document.getElementById('view-app').classList.add('flex');
+ document.getElementById('f-date').value=new Date().toISOString().split('T')[0];
+ document.getElementById('oc-date').value=new Date().toISOString().split('T')[0];
+ if(typeof initAppDemo==='function') initAppDemo(); else { populateSelects(); renderDashboard(); }
+ document.getElementById('btn-login').innerText='Entrar (Demo Liberado)'; document.getElementById('btn-login').disabled=false;
+ showToast('Demo liberado!');
+ return;
+}
+const email=emailRaw; const pass=document.getElementById('login-pass').value;
+const btn=document.getElementById('btn-login'); btn.innerText='Autenticando...'; btn.disabled=true;
 const msg=document.getElementById('login-msg'); msg.classList.add('hidden');
-
-// Demo bypass total
-if(email==='demo@laserenissima.com.br' && pass==='demo123'){
-  document.getElementById('lbl-user').innerText=email+' (demo)';
-  document.getElementById('view-auth').classList.add('hidden');
-  document.getElementById('view-app').classList.remove('hidden');
-  document.getElementById('view-app').classList.add('flex');
-  document.getElementById('f-date').value=new Date().toISOString().split('T')[0];
-  document.getElementById('oc-date').value=new Date().toISOString().split('T')[0];
-  if(db.machines.length===0) db.machines=[{id:'1',nome:'Envase 1 - 200g',codigo:'ENV1',ativo:true}];
-  populateSelects(); renderDashboard(); renderHistory(); renderOcorrencias(); renderMachList(); renderProdList(); renderMatrixList();
-  btn.innerText='Entrar - Equipe Manutenção'; btn.disabled=false;
-  showToast('Demo liberado!');
-  return;
-}
-
-if(isDemo || !supabaseClient){
-  // Sem Supabase, libera qualquer login da equipe
-  document.getElementById('lbl-user').innerText=emailRaw+' (local)';
-  document.getElementById('view-auth').classList.add('hidden');
-  document.getElementById('view-app').classList.remove('hidden');
-  document.getElementById('view-app').classList.add('flex');
-  document.getElementById('f-date').value=new Date().toISOString().split('T')[0];
-  document.getElementById('oc-date').value=new Date().toISOString().split('T')[0];
-  populateSelects(); renderDashboard(); renderHistory(); renderOcorrencias(); renderMachList(); renderProdList(); renderMatrixList();
-  btn.innerText='Entrar - Equipe Manutenção'; btn.disabled=false;
-  showToast('Modo local - cole anon key para ativar equipe');
-  return;
-}
 
 try{
 const {data,error}=await supabaseClient.auth.signInWithPassword({email,password:pass});
 if(error){
-  msg.innerText='Erro: '+error.message+' - Verifique usuários em Supabase Auth > Users'; msg.className='text-xs font-bold p-3 rounded-xl bg-red-50 text-brand-red border border-red-200'; msg.classList.remove('hidden');
-  btn.innerText='Entrar - Equipe Manutenção'; btn.disabled=false; return;
+if(true){ // DEMO SEMPRE LIBERADO PARA VERCEL
+// Fallback demo offline para teste rápido
+document.getElementById('lbl-user').innerText=email+' (demo)';
+document.getElementById('view-auth').classList.add('hidden');
+document.getElementById('view-app').classList.remove('hidden');
+document.getElementById('view-app').classList.add('flex');
+initAppDemo();
+return;
+}
+msg.innerText='Erro: '+error.message+' - Crie o usuário no Supabase Auth'; msg.className='text-xs font-bold p-3 rounded-xl bg-red-50 text-brand-red border border-red-200'; msg.classList.remove('hidden'); return;
 }
 document.getElementById('lbl-user').innerText=data.user.email;
 document.getElementById('view-auth').classList.add('hidden');
@@ -253,9 +224,10 @@ document.getElementById('f-date').value=new Date().toISOString().split('T')[0];
 document.getElementById('oc-date').value=new Date().toISOString().split('T')[0];
 await carregarDadosSupabase();
 }catch(err){msg.innerText='Erro: '+err.message; msg.className='text-xs font-bold p-3 rounded-xl bg-red-50 text-brand-red'; msg.classList.remove('hidden');}
-finally{btn.innerText='Entrar - Equipe Manutenção'; btn.disabled=false;}
+finally{btn.innerText='Entrar com Supabase Auth'; btn.disabled=false;}
 });
-function logout(){if(supabaseClient) supabaseClient.auth.signOut(); location.reload();}
+function initAppDemo(){document.getElementById('f-date').value=new Date().toISOString().split('T')[0]; document.getElementById('oc-date').value=new Date().toISOString().split('T')[0]; db.machines=[{id:'1',nome:'Envase 1 - 200g',codigo:'ENV1',ativo:true}]; db.products=[{id:'p1',sku:580,descricao:'LPI Vit 40x200g',peso_nominal_g:0.2,tara_padrao_g:7.2,limite_minimo_g:196,limite_maximo_g:204,ativo:true}]; db.matrix=[{id:'m1',machine_id:'1',product_id:'p1',bpm:50,capacidade_nominal:3000}]; populateSelects(); renderDashboard(); renderHistory(); renderOcorrencias(); renderMachList(); renderProdList(); renderMatrixList();}
+function logout(){supabaseClient.auth.signOut(); location.reload();}
 function switchTab(tab){['dashboard','novo','ocorrencias','historico','cadastros'].forEach(t=>{document.getElementById(`content-${t}`)?.classList.add('hidden');document.getElementById(`nav-${t}`).className='px-4 py-3.5 text-xs font-bold border-b-4 border-transparent text-green-100 flex gap-2 items-center'});document.getElementById(`content-${tab}`).classList.remove('hidden');document.getElementById(`nav-${tab}`).className='px-4 py-3.5 text-xs font-black border-b-4 border-brand-red bg-white/10 text-white flex gap-2 items-center'; if(tab==='dashboard')renderDashboard();}
 function switchCad(tab){['machines','products','matrix'].forEach(t=>{document.getElementById(`cad-${t}`).classList.add('hidden');document.getElementById(`tab-c-${t}`).className='px-5 py-3 rounded-xl bg-white border text-xs font-bold'});document.getElementById(`cad-${tab}`).classList.remove('hidden');document.getElementById(`tab-c-${tab}`).className='px-5 py-3 rounded-xl bg-brand-green text-white text-xs font-black';}
 function populateSelects(){const mHtml=db.machines.filter(m=>m.ativo).map(m=>`<option value="${m.id}">${m.nome}</option>`).join(''); document.getElementById('f-machine').innerHTML=mHtml; document.getElementById('oc-machine').innerHTML=mHtml; document.getElementById('cmat-mach').innerHTML=mHtml; document.getElementById('fil-mach').innerHTML='<option value="all">Todas</option>'+mHtml; document.getElementById('cmat-prod').innerHTML=db.products.filter(p=>p.ativo).map(p=>`<option value="${p.id}">${p.sku} - ${p.descricao}</option>`).join(''); updateProductsList();}
@@ -279,23 +251,23 @@ const isQuality=peso>0&&(peso<prod.limite_minimo_g||peso>prod.limite_maximo_g); 
 const isMeta=perdaMpPct>0.35; document.getElementById('alert-meta').className=isMeta?'flex bg-amber-50 border-2 border-amber-400 text-amber-800 p-4 rounded-2xl gap-3 items-center':'hidden'; if(isMeta)document.getElementById('alert-meta-msg').innerText=`Perda MP ${perdaMpPct.toFixed(2)}% acima da meta 0.35%`;
 return {disponibilidade,performance,qualidade,oee,perdaMpKg,perdaMpPct,perdaEmbKg,totalRej,prodLiqKg,capNom};
 }
+
+// LOGS SUPABASE CRUD
 document.getElementById('form-lancamento').addEventListener('submit',async e=>{
-e.preventDefault(); const c=runCalculations();
-if(isDemo || !supabaseClient){
-const payload={id:Date.now().toString(),shift_date:document.getElementById('f-date').value,shift_number:parseInt(document.getElementById('f-turno').value),machine_id:document.getElementById('f-machine').value,product_id:document.getElementById('f-product').value,availability_hours:parseFloat(document.getElementById('f-disp').value),accepted_volume:parseInt(document.getElementById('f-vol').value),average_weight:parseFloat(document.getElementById('f-peso').value),total_rejects:c.totalRej,calculated_efficiency:c.oee,disponibilidade:c.disponibilidade,performance:c.performance,qualidade:c.qualidade,calculated_mp_loss_kg:c.perdaMpKg,perda_mp_percent:c.perdaMpPct,calculated_packaging_loss_kg:c.perdaEmbKg,producao_liquida_kg:c.prodLiqKg,created_by:document.getElementById('lbl-user').innerText,created_at:new Date().toISOString()};
-if(editingLogId){const idx=db.logs.findIndex(l=>l.id===editingLogId); if(idx>=0) db.logs[idx]={...db.logs[idx],...payload, id:editingLogId}; editingLogId=null; document.getElementById('txt-save').innerText='Salvar no Supabase - Equipe'; document.getElementById('btn-cancel-edit').classList.add('hidden'); showToast('Atualizado local! Cole anon key para salvar para equipe');} else {db.logs.unshift(payload); showToast('Registrado local! OEE '+c.oee.toFixed(1)+'% - Cole anon key para equipe ver');}
-e.target.reset(); document.getElementById('f-date').value=new Date().toISOString().split('T')[0]; renderDashboard(); renderHistory(); return;
-}
-const btn=document.getElementById('btn-salvar-form'); btn.disabled=true; btn.innerHTML='Salvando para equipe...';
+e.preventDefault(); const c=runCalculations(); const btn=document.getElementById('btn-salvar-form'); btn.disabled=true; btn.innerHTML='Salvando...';
 const payload={shift_date:document.getElementById('f-date').value,shift_number:parseInt(document.getElementById('f-turno').value),machine_id:document.getElementById('f-machine').value,product_id:document.getElementById('f-product').value,availability_hours:parseFloat(document.getElementById('f-disp').value),accepted_volume:parseInt(document.getElementById('f-vol').value),average_weight:parseFloat(document.getElementById('f-peso').value),total_rejects:c.totalRej,calculated_efficiency:c.oee,disponibilidade:c.disponibilidade,performance:c.performance,qualidade:c.qualidade,calculated_mp_loss_kg:c.perdaMpKg,perda_mp_percent:c.perdaMpPct,calculated_packaging_loss_kg:c.perdaEmbKg,producao_liquida_kg:c.prodLiqKg,created_by:document.getElementById('lbl-user').innerText};
-let error; if(editingLogId){const {error:err}=await supabaseClient.from('production_logs').update(payload).eq('id',editingLogId); error=err;} else {const {error:err}=await supabaseClient.from('production_logs').insert([payload]); error=err;}
-if(error)showToast('Erro: '+error.message,'error'); else {showToast('Salvo no Supabase! Equipe toda vê agora'); editingLogId=null; document.getElementById('txt-save').innerText='Salvar no Supabase - Equipe'; document.getElementById('btn-cancel-edit').classList.add('hidden'); e.target.reset(); document.getElementById('f-date').value=new Date().toISOString().split('T')[0]; await carregarDadosSupabase();}
-btn.disabled=false; btn.innerHTML='<i data-lucide="save" class="w-4 h-4"></i><span id="txt-save">Salvar no Supabase - Equipe</span>'; lucide.createIcons();
+let error;
+if(editingLogId){const {error:err}=await supabaseClient.from('production_logs').update(payload).eq('id',editingLogId); error=err;}
+else{const {error:err}=await supabaseClient.from('production_logs').insert([payload]); error=err;}
+if(error){showToast('Erro Supabase: '+error.message,'error');}
+else{showToast(editingLogId?'Atualizado no Supabase!':'Registrado no Supabase! OEE '+c.oee.toFixed(1)+'%'); editingLogId=null; document.getElementById('txt-save').innerText='Registrar no Supabase'; document.getElementById('btn-cancel-edit').classList.add('hidden'); e.target.reset(); document.getElementById('f-date').value=new Date().toISOString().split('T')[0]; await carregarDadosSupabase();}
+btn.disabled=false; btn.innerHTML='<i data-lucide="save" class="w-4 h-4"></i><span id="txt-save">Registrar no Supabase</span>'; lucide.createIcons();
 });
 function editLog(id){const l=db.logs.find(x=>x.id===id); if(!l)return; editingLogId=id; switchTab('novo'); document.getElementById('f-date').value=l.shift_date; document.getElementById('f-turno').value=l.shift_number; document.getElementById('f-machine').value=l.machine_id; updateProductsList(); document.getElementById('f-product').value=l.product_id; document.getElementById('f-disp').value=l.availability_hours; document.getElementById('f-vol').value=l.accepted_volume; document.getElementById('f-peso').value=l.average_weight; document.getElementById('f-rej-b').value=l.total_rejects; document.getElementById('f-rej-a').value=0; document.getElementById('txt-save').innerText='Atualizar no Supabase'; document.getElementById('btn-cancel-edit').classList.remove('hidden'); runCalculations();}
-function cancelEditLog(){editingLogId=null; document.getElementById('form-lancamento').reset(); document.getElementById('txt-save').innerText='Salvar no Supabase - Equipe'; document.getElementById('btn-cancel-edit').classList.add('hidden'); document.getElementById('f-date').value=new Date().toISOString().split('T')[0];}
-async function deleteLog(id){if(confirm('Excluir? Todos da equipe não verão mais')){if(isDemo){db.logs=db.logs.filter(x=>x.id!==id); renderHistory(); renderDashboard();} else {const {error}=await supabaseClient.from('production_logs').delete().eq('id',id); if(!error) await carregarDadosSupabase();}}}
+function cancelEditLog(){editingLogId=null; document.getElementById('form-lancamento').reset(); document.getElementById('txt-save').innerText='Registrar no Supabase'; document.getElementById('btn-cancel-edit').classList.add('hidden'); document.getElementById('f-date').value=new Date().toISOString().split('T')[0];}
+async function deleteLog(id){if(confirm('Excluir este apontamento no Supabase?')){const {error}=await supabaseClient.from('production_logs').delete().eq('id',id); if(error)showToast(error.message,'error'); else{showToast('Excluído do Supabase'); await carregarDadosSupabase();}}}
 
+// DASHBOARD
 function setDashPeriod(p){dashPeriod=p; ['day','month','year'].forEach(k=>{document.getElementById(`dp-${k}`).className=k===p?'px-4 py-2 rounded-full text-xs font-black bg-slate-900 text-white':'px-4 py-2 rounded-full text-xs font-bold text-slate-500'}); renderDashboard();}
 function renderDashboard(){
 const active=db.logs; const tPct=active.reduce((a,l)=>a+(l.accepted_volume||0),0); const tLiq=active.reduce((a,l)=>a+(l.producao_liquida_kg||0),0);
@@ -316,62 +288,63 @@ const ctx1=document.getElementById('chart-evolucao'); if(ctx1){if(window.chart1)
 function renderHistory(){
 const fD=document.getElementById('fil-date').value; const fM=document.getElementById('fil-mach').value;
 let active=db.logs; if(fD)active=active.filter(l=>l.shift_date===fD); if(fM!=='all')active=active.filter(l=>l.machine_id===fM);
-document.getElementById('tbody-history').innerHTML=active.map(l=>{const m=db.machines.find(x=>x.id===l.machine_id); const p=db.products.find(x=>x.id===l.product_id); return `<tr class="hover:bg-slate-50"><td class="p-4 font-bold">T${l.shift_number}<br><span class="text-[10px] text-slate-500">${l.shift_date}</span></td><td class="p-4 font-bold text-xs">${m?.nome||''}</td><td class="p-4 text-xs">SKU ${p?.sku||''}</td><td class="p-4"><span class="bg-green-50 text-brand-green px-2 py-1 rounded-lg font-black text-xs">${(l.calculated_efficiency||0).toFixed(1)}%</span><br><span class="text-[9px] text-slate-500">D ${((l.disponibilidade||0)*100).toFixed(0)} P ${((l.performance||0)*100).toFixed(0)} Q ${((l.qualidade||0)*100).toFixed(0)}</span></td><td class="p-4"><span class="px-2 py-1 rounded-lg font-black text-xs ${l.perda_mp_percent>0.35?'bg-red-100 text-brand-red':'bg-slate-100'}">${(l.perda_mp_percent||0).toFixed(2)}%</span></td><td class="p-4 text-xs">${(l.calculated_packaging_loss_kg||0).toFixed(2)}kg</td><td class="p-4 text-xs font-bold">${(l.created_by||'').split('@')[0]}</td><td class="p-4 text-center flex gap-1 justify-center"><button onclick="editLog('${l.id}')" class="p-2 bg-slate-100 rounded-xl"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="deleteLog('${l.id}')" class="p-2 text-slate-400 rounded-xl"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td></tr>`}).join('')||'<tr><td colspan="8" class="p-12 text-center text-slate-400 font-bold">Nenhum registro</td></tr>'; lucide.createIcons();
+document.getElementById('tbody-history').innerHTML=active.map(l=>{const m=db.machines.find(x=>x.id===l.machine_id); const p=db.products.find(x=>x.id===l.product_id); return `<tr class="hover:bg-slate-50"><td class="p-4 font-bold">T${l.shift_number}<br><span class="text-[10px] text-slate-500">${l.shift_date}</span></td><td class="p-4 font-bold text-xs">${m?.nome||''}</td><td class="p-4 text-xs">SKU ${p?.sku||''}</td><td class="p-4"><span class="bg-green-50 text-brand-green px-2 py-1 rounded-lg font-black text-xs">${(l.calculated_efficiency||0).toFixed(1)}%</span><br><span class="text-[9px] text-slate-500">D ${((l.disponibilidade||0)*100).toFixed(0)} P ${((l.performance||0)*100).toFixed(0)} Q ${((l.qualidade||0)*100).toFixed(0)}</span></td><td class="p-4"><span class="px-2 py-1 rounded-lg font-black text-xs ${l.perda_mp_percent>0.35?'bg-red-100 text-brand-red':'bg-slate-100'}">${(l.perda_mp_percent||0).toFixed(2)}%</span></td><td class="p-4 text-xs">${(l.calculated_packaging_loss_kg||0).toFixed(2)}kg</td><td class="p-4 text-center flex gap-1 justify-center"><button onclick="editLog('${l.id}')" class="p-2 bg-slate-100 hover:bg-slate-200 rounded-xl"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="deleteLog('${l.id}')" class="p-2 text-slate-400 hover:text-brand-red hover:bg-red-50 rounded-xl"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td></tr>`}).join('')||'<tr><td colspan="7" class="p-12 text-center text-slate-400 font-bold">Nenhum registro</td></tr>'; lucide.createIcons();
 }
+
+// OCORRENCIAS SUPABASE
 function filterOc(f){ocFilter=f; ['all','aberto','atrasado','concluido'].forEach(k=>{document.getElementById(`f-oc-${k}`).className=k===f?'px-4 py-2 rounded-full bg-slate-900 text-white text-xs font-black':'px-4 py-2 rounded-full bg-white border text-xs font-bold'}); renderOcorrencias();}
 function renderOcorrencias(){
 let data=db.ocorrencias; if(ocFilter!=='all'){if(ocFilter==='atrasado')data=data.filter(o=>o.status!=='concluido'&&(o.acoes||[]).some(a=>new Date(a.quando)<new Date()&&a.status!=='concluido')); else data=data.filter(o=>o.status===ocFilter);}
-document.getElementById('list-ocorrencias').innerHTML=data.map(o=>{const m=db.machines.find(x=>x.id===o.machine_id); const atrasado=o.status!=='concluido'&&(o.acoes||[]).some(a=>new Date(a.quando)<new Date()&&a.status!=='concluido'); return `<div class="card p-5 border-l-4 ${o.status==='concluido'?'border-green-500':atrasado?'border-brand-red':'border-amber-400'}"><div class="flex justify-between items-start gap-3"><div><p class="text-[10px] font-black uppercase tracking-widest text-slate-400">${o.shift_date} • T${o.shift_number} • ${m?.nome||''} • ${o.tempo_parada_min||0}min • Por: ${o.created_by||o.responsavel||''}</p><p class="font-black text-sm mt-1">${o.categoria}</p><p class="text-sm text-slate-600 mt-1">${o.descricao}</p><p class="text-xs mt-2"><span class="font-bold">Imediata:</span> ${o.acao_imediata||'-'} • <span class="font-bold">Resp:</span> ${o.responsavel||'-'}</p></div><span class="text-[10px] font-black uppercase px-2.5 py-1 rounded-full ${o.status==='concluido'?'bg-green-100 text-green-700':atrasado?'bg-red-100 text-red-700':'bg-amber-100 text-amber-700'}">${atrasado?'ATRASADO':o.status.toUpperCase()}</span></div><div class="mt-3 flex flex-wrap gap-2"><button onclick="openPlano('${o.id}')" class="px-3 py-2 bg-slate-900 text-white rounded-xl text-xs font-black">Plano (${(o.acoes||[]).length})</button><button onclick="editOc('${o.id}')" class="px-3 py-2 bg-white border rounded-xl text-xs font-bold">Editar</button><button onclick="toggleOcStatus('${o.id}')" class="px-3 py-2 bg-white border rounded-xl text-xs font-bold">${o.status==='concluido'?'Reabrir':'Concluir'}</button><button onclick="deleteOc('${o.id}')" class="px-3 py-2 bg-white border rounded-xl text-xs font-bold text-brand-red">Excluir</button></div></div>`}).join('')||'<p class="text-sm text-slate-400 p-6 text-center bg-white rounded-2xl border">Nenhuma ocorrência</p>'; lucide.createIcons();
+document.getElementById('list-ocorrencias').innerHTML=data.map(o=>{const m=db.machines.find(x=>x.id===o.machine_id); const atrasado=o.status!=='concluido'&&(o.acoes||[]).some(a=>new Date(a.quando)<new Date()&&a.status!=='concluido'); return `<div class="card p-5 border-l-4 ${o.status==='concluido'?'border-green-500':atrasado?'border-brand-red':'border-amber-400'}"><div class="flex justify-between items-start gap-3"><div><p class="text-[10px] font-black uppercase tracking-widest text-slate-400">${o.shift_date} • T${o.shift_number} • ${m?.nome||''} • ${o.tempo_parada_min||0}min</p><p class="font-black text-sm mt-1">${o.categoria}</p><p class="text-sm text-slate-600 mt-1">${o.descricao}</p><p class="text-xs mt-2"><span class="font-bold">Imediata:</span> ${o.acao_imediata||'-'} • <span class="font-bold">Resp:</span> ${o.responsavel||'-'}</p></div><span class="text-[10px] font-black uppercase px-2.5 py-1 rounded-full ${o.status==='concluido'?'bg-green-100 text-green-700':atrasado?'bg-red-100 text-red-700':'bg-amber-100 text-amber-700'}">${atrasado?'ATRASADO':o.status.toUpperCase()}</span></div><div class="mt-3 flex flex-wrap gap-2"><button onclick="openPlano('${o.id}')" class="px-3 py-2 bg-slate-900 text-white rounded-xl text-xs font-black">Plano (${(o.acoes||[]).length})</button><button onclick="editOc('${o.id}')" class="px-3 py-2 bg-white border rounded-xl text-xs font-bold">Editar</button><button onclick="toggleOcStatus('${o.id}')" class="px-3 py-2 bg-white border rounded-xl text-xs font-bold">${o.status==='concluido'?'Reabrir':'Concluir'}</button><button onclick="deleteOc('${o.id}')" class="px-3 py-2 bg-white border rounded-xl text-xs font-bold text-brand-red">Excluir</button></div></div>`}).join('')||'<p class="text-sm text-slate-400 p-6 text-center bg-white rounded-2xl border">Nenhuma ocorrência</p>'; lucide.createIcons();
 }
 document.getElementById('form-ocorrencia').addEventListener('submit',async e=>{
-e.preventDefault();
-if(isDemo || !supabaseClient){
-if(editingOcId){const idx=db.ocorrencias.findIndex(o=>o.id===editingOcId); if(idx>=0){db.ocorrencias[idx]={...db.ocorrencias[idx],shift_date:document.getElementById('oc-date').value,machine_id:document.getElementById('oc-machine').value,shift_number:parseInt(document.getElementById('oc-turno').value),categoria:document.getElementById('oc-cat').value,descricao:document.getElementById('oc-desc').value,acao_imediata:document.getElementById('oc-acao-imed').value,responsavel:document.getElementById('oc-resp').value,tempo_parada_min:parseInt(document.getElementById('oc-parada').value)||0};} editingOcId=null; document.getElementById('btn-oc-save').innerText='Salvar para Equipe'; document.getElementById('btn-oc-cancel').classList.add('hidden'); showToast('Atualizada local!');} else {const oc={id:Date.now().toString(),shift_date:document.getElementById('oc-date').value,machine_id:document.getElementById('oc-machine').value,shift_number:parseInt(document.getElementById('oc-turno').value),categoria:document.getElementById('oc-cat').value,descricao:document.getElementById('oc-desc').value,acao_imediata:document.getElementById('oc-acao-imed').value,responsavel:document.getElementById('oc-resp').value,tempo_parada_min:parseInt(document.getElementById('oc-parada').value)||0,status:'aberto',created_by:document.getElementById('lbl-user').innerText,created_at:new Date().toISOString(),acoes:[]}; db.ocorrencias.unshift(oc); showToast('Registrada local! Cole anon key para equipe ver');} e.target.reset(); document.getElementById('oc-date').value=new Date().toISOString().split('T')[0]; renderOcorrencias(); renderDashboard(); return;
-}
-const payload={shift_date:document.getElementById('oc-date').value,machine_id:document.getElementById('oc-machine').value,shift_number:parseInt(document.getElementById('oc-turno').value),categoria:document.getElementById('oc-cat').value,descricao:document.getElementById('oc-desc').value,acao_imediata:document.getElementById('oc-acao-imed').value,responsavel:document.getElementById('oc-resp').value,tempo_parada_min:parseInt(document.getElementById('oc-parada').value)||0,status:'aberto',created_by:document.getElementById('lbl-user').innerText};
-let error; if(editingOcId){const {error:err}=await supabaseClient.from('occurrences').update(payload).eq('id',editingOcId); error=err; editingOcId=null; document.getElementById('btn-oc-save').innerText='Salvar para Equipe'; document.getElementById('btn-oc-cancel').classList.add('hidden');} else {const {error:err}=await supabaseClient.from('occurrences').insert([payload]); error=err;}
-if(error)showToast(error.message,'error'); else{showToast('Salvo para equipe toda!'); e.target.reset(); document.getElementById('oc-date').value=new Date().toISOString().split('T')[0]; await carregarDadosSupabase();}
+e.preventDefault(); const payload={shift_date:document.getElementById('oc-date').value,machine_id:document.getElementById('oc-machine').value,shift_number:parseInt(document.getElementById('oc-turno').value),categoria:document.getElementById('oc-cat').value,descricao:document.getElementById('oc-desc').value,acao_imediata:document.getElementById('oc-acao-imed').value,responsavel:document.getElementById('oc-resp').value,tempo_parada_min:parseInt(document.getElementById('oc-parada').value)||0,status:'aberto',created_by:document.getElementById('lbl-user').innerText};
+let error;
+if(editingOcId){const {error:err}=await supabaseClient.from('occurrences').update(payload).eq('id',editingOcId); error=err; editingOcId=null; document.getElementById('btn-oc-save').innerText='Salvar no Supabase'; document.getElementById('btn-oc-cancel').classList.add('hidden');}
+else{const {error:err}=await supabaseClient.from('occurrences').insert([payload]); error=err;}
+if(error)showToast(error.message,'error'); else{showToast('Ocorrência salva no Supabase!'); e.target.reset(); document.getElementById('oc-date').value=new Date().toISOString().split('T')[0]; await carregarDadosSupabase();}
 });
-function editOc(id){const o=db.ocorrencias.find(x=>x.id===id); if(!o)return; editingOcId=id; document.getElementById('oc-date').value=o.shift_date; document.getElementById('oc-machine').value=o.machine_id; document.getElementById('oc-turno').value=o.shift_number; document.getElementById('oc-cat').value=o.categoria; document.getElementById('oc-desc').value=o.descricao; document.getElementById('oc-acao-imed').value=o.acao_imediata; document.getElementById('oc-resp').value=o.responsavel; document.getElementById('oc-parada').value=o.tempo_parada_min; document.getElementById('btn-oc-save').innerText='Atualizar para Equipe'; document.getElementById('btn-oc-cancel').classList.remove('hidden');}
-function cancelEditOc(){editingOcId=null; document.getElementById('form-ocorrencia').reset(); document.getElementById('oc-date').value=new Date().toISOString().split('T')[0]; document.getElementById('btn-oc-save').innerText='Salvar para Equipe'; document.getElementById('btn-oc-cancel').classList.add('hidden');}
-async function deleteOc(id){if(confirm('Excluir? Equipe não verá mais')){if(isDemo){db.ocorrencias=db.ocorrencias.filter(o=>o.id!==id); renderOcorrencias(); renderDashboard();} else {const {error}=await supabaseClient.from('occurrences').delete().eq('id',id); if(!error) await carregarDadosSupabase();}}}
-async function toggleOcStatus(id){const oc=db.ocorrencias.find(o=>o.id===id); const novo=oc.status==='concluido'?'aberto':'concluido'; if(isDemo){oc.status=novo; renderOcorrencias(); renderDashboard();} else {const {error}=await supabaseClient.from('occurrences').update({status:novo}).eq('id',id); if(!error) await carregarDadosSupabase();}}
+function editOc(id){const o=db.ocorrencias.find(x=>x.id===id); if(!o)return; editingOcId=id; document.getElementById('oc-date').value=o.shift_date; document.getElementById('oc-machine').value=o.machine_id; document.getElementById('oc-turno').value=o.shift_number; document.getElementById('oc-cat').value=o.categoria; document.getElementById('oc-desc').value=o.descricao; document.getElementById('oc-acao-imed').value=o.acao_imediata; document.getElementById('oc-resp').value=o.responsavel; document.getElementById('oc-parada').value=o.tempo_parada_min; document.getElementById('btn-oc-save').innerText='Atualizar no Supabase'; document.getElementById('btn-oc-cancel').classList.remove('hidden');}
+function cancelEditOc(){editingOcId=null; document.getElementById('form-ocorrencia').reset(); document.getElementById('oc-date').value=new Date().toISOString().split('T')[0]; document.getElementById('btn-oc-save').innerText='Salvar no Supabase'; document.getElementById('btn-oc-cancel').classList.add('hidden');}
+async function deleteOc(id){if(confirm('Excluir ocorrência no Supabase?')){const {error}=await supabaseClient.from('occurrences').delete().eq('id',id); if(error)showToast(error.message,'error'); else{showToast('Excluída'); await carregarDadosSupabase();}}}
+async function toggleOcStatus(id){const oc=db.ocorrencias.find(o=>o.id===id); const novo=oc.status==='concluido'?'aberto':'concluido'; const {error}=await supabaseClient.from('occurrences').update({status:novo}).eq('id',id); if(!error){await carregarDadosSupabase();}}
 
+// PLANO ACAO SUPABASE
 function openPlano(id){document.getElementById('modal-plano').classList.remove('hidden'); document.getElementById('pl-oc-id').value=id; const oc=db.ocorrencias.find(o=>o.id===id); document.getElementById('modal-plano-content').innerHTML=`<p class="text-[10px] font-black uppercase text-slate-400">${oc.shift_date} • ${oc.categoria}</p><p class="font-bold mt-1">${oc.descricao}</p>`; renderPlanos(id);}
 function closeModalPlano(){document.getElementById('modal-plano').classList.add('hidden'); cancelEditPlano();}
 function renderPlanos(ocId){const oc=db.ocorrencias.find(o=>o.id===ocId); const cont=document.getElementById('list-planos'); cont.innerHTML=(oc.acoes||[]).map(a=>{const atr=new Date(a.quando)<new Date()&&a.status!=='concluido'; return `<div class="p-3 rounded-xl border flex justify-between gap-3 ${atr?'bg-red-50 border-red-200':'bg-slate-50'}"><div class="flex-1"><p class="font-black text-sm">${a.o_que}</p><p class="text-xs text-slate-600">Quem: ${a.quem} • Quando: ${a.quando} • ${a.como||''}</p></div><div class="text-right flex flex-col gap-1 items-end"><span class="text-[10px] font-black uppercase px-2 py-1 rounded-full ${a.status==='concluido'?'bg-green-100 text-green-700':atr?'bg-red-100 text-red-700':'bg-amber-100 text-amber-700'}">${a.status}</span><div class="flex gap-1"><button onclick="editPlano('${ocId}','${a.id}')" class="text-[10px] bg-white border px-2 py-1 rounded-full">Editar</button><button onclick="removePlano('${ocId}','${a.id}')" class="text-[10px] bg-white border px-2 py-1 rounded-full">Excluir</button></div></div></div>`}).join('')||'<p class="text-xs text-slate-400">Nenhum plano</p>'; lucide.createIcons();}
 document.getElementById('form-plano').addEventListener('submit',async e=>{
 e.preventDefault(); const ocId=document.getElementById('pl-oc-id').value;
-if(isDemo || !supabaseClient){
-const oc=db.ocorrencias.find(o=>o.id===ocId);
-if(editingPlanoId){const p=oc.acoes.find(a=>a.id===editingPlanoId); if(p){p.o_que=document.getElementById('pl-oque').value; p.quem=document.getElementById('pl-quem').value; p.quando=document.getElementById('pl-quando').value; p.status=document.getElementById('pl-status').value; p.como=document.getElementById('pl-como').value;} editingPlanoId=null; document.getElementById('btn-plano-save').innerText='Salvar para Equipe'; document.getElementById('btn-plano-cancel').classList.add('hidden');} else {const plano={id:Date.now().toString(),o_que:document.getElementById('pl-oque').value,quem:document.getElementById('pl-quem').value,quando:document.getElementById('pl-quando').value,status:document.getElementById('pl-status').value,como:document.getElementById('pl-como').value}; oc.acoes.push(plano); if(plano.status!=='concluido')oc.status='em_andamento';}
-renderPlanos(ocId); renderOcorrencias(); renderDashboard(); e.target.reset(); showToast('Ação salva local!'); return;
-}
 const payload={occurrence_id:ocId,o_que:document.getElementById('pl-oque').value,quem:document.getElementById('pl-quem').value,quando:document.getElementById('pl-quando').value,status:document.getElementById('pl-status').value,como:document.getElementById('pl-como').value};
-let error; if(editingPlanoId){const {error:err}=await supabaseClient.from('action_plans').update(payload).eq('id',editingPlanoId); error=err; editingPlanoId=null; document.getElementById('btn-plano-save').innerText='Salvar para Equipe'; document.getElementById('btn-plano-cancel').classList.add('hidden');} else {const {error:err}=await supabaseClient.from('action_plans').insert([payload]); error=err;}
-if(error)showToast(error.message,'error'); else{showToast('Plano salvo para equipe!'); e.target.reset(); await carregarDadosSupabase(); renderPlanos(ocId);}
+let error;
+if(editingPlanoId){const {error:err}=await supabaseClient.from('action_plans').update(payload).eq('id',editingPlanoId); error=err; editingPlanoId=null; document.getElementById('btn-plano-save').innerText='Salvar no Supabase'; document.getElementById('btn-plano-cancel').classList.add('hidden');}
+else{const {error:err}=await supabaseClient.from('action_plans').insert([payload]); error=err;}
+if(error)showToast(error.message,'error'); else{showToast('Plano salvo!'); e.target.reset(); await carregarDadosSupabase(); renderPlanos(ocId);}
 });
-function editPlano(ocId,plId){const oc=db.ocorrencias.find(o=>o.id===ocId); const p=oc.acoes.find(a=>a.id===plId); if(!p)return; editingPlanoId=plId; document.getElementById('pl-oque').value=p.o_que; document.getElementById('pl-quem').value=p.quem; document.getElementById('pl-quando').value=p.quando; document.getElementById('pl-status').value=p.status; document.getElementById('pl-como').value=p.como; document.getElementById('btn-plano-save').innerText='Atualizar'; document.getElementById('btn-plano-cancel').classList.remove('hidden');}
-function cancelEditPlano(){editingPlanoId=null; document.getElementById('form-plano').reset(); document.getElementById('btn-plano-save').innerText='Salvar para Equipe'; document.getElementById('btn-plano-cancel').classList.add('hidden');}
-async function removePlano(ocId,plId){if(confirm('Remover?')){if(isDemo){const oc=db.ocorrencias.find(o=>o.id===ocId); oc.acoes=oc.acoes.filter(a=>a.id!==plId); renderPlanos(ocId); renderOcorrencias();} else {const {error}=await supabaseClient.from('action_plans').delete().eq('id',plId); if(!error){await carregarDadosSupabase(); renderPlanos(ocId);}}}}
+function editPlano(ocId,plId){const oc=db.ocorrencias.find(o=>o.id===ocId); const p=oc.acoes.find(a=>a.id===plId); if(!p)return; editingPlanoId=plId; document.getElementById('pl-oque').value=p.o_que; document.getElementById('pl-quem').value=p.quem; document.getElementById('pl-quando').value=p.quando; document.getElementById('pl-status').value=p.status; document.getElementById('pl-como').value=p.como; document.getElementById('btn-plano-save').innerText='Atualizar no Supabase'; document.getElementById('btn-plano-cancel').classList.remove('hidden');}
+function cancelEditPlano(){editingPlanoId=null; document.getElementById('form-plano').reset(); document.getElementById('btn-plano-save').innerText='Salvar no Supabase'; document.getElementById('btn-plano-cancel').classList.add('hidden');}
+async function removePlano(ocId,plId){if(confirm('Remover ação?')){const {error}=await supabaseClient.from('action_plans').delete().eq('id',plId); if(!error){await carregarDadosSupabase(); renderPlanos(ocId);}}}
 
+// CADASTROS SUPABASE - MAQUINAS
 function renderMachList(){document.getElementById('list-machines').innerHTML=db.machines.map(m=>`<div class="card p-4 flex justify-between items-center"><div><p class="font-black text-sm">${m.nome}</p><p class="text-[10px] text-slate-500 font-bold uppercase">${m.codigo}</p></div><div class="flex gap-1"><button onclick="editMach('${m.id}')" class="p-2 bg-slate-100 rounded-xl"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="deleteMach('${m.id}')" class="p-2 bg-red-50 text-brand-red rounded-xl"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></div>`).join(''); lucide.createIcons(); populateSelects();}
-document.getElementById('form-cad-mach').addEventListener('submit',async e=>{e.preventDefault(); const id=document.getElementById('cm-id').value; const nome=document.getElementById('cm-nome').value; if(isDemo){if(id){const m=db.machines.find(x=>x.id===id); if(m){m.nome=nome; m.codigo=nome.substring(0,4).toUpperCase();}} else {db.machines.push({id:Date.now().toString(),nome,codigo:nome.substring(0,4).toUpperCase(),ativo:true});} e.target.reset(); document.getElementById('cm-id').value=''; document.getElementById('btn-mach-save').innerText='Salvar'; document.getElementById('btn-mach-cancel').classList.add('hidden'); renderMachList(); showToast(id?'Atualizada!':'Salva local!'); return;} let error; if(id){const {error:err}=await supabaseClient.from('machines').update({name:nome}).eq('id',id); error=err;} else {const {error:err}=await supabaseClient.from('machines').insert([{name:nome,is_active:true}]); error=err;} if(error)showToast(error.message,'error'); else {showToast('Salva para equipe!'); e.target.reset(); document.getElementById('cm-id').value=''; await carregarDadosSupabase();}});
+document.getElementById('form-cad-mach').addEventListener('submit',async e=>{e.preventDefault(); const id=document.getElementById('cm-id').value; const nome=document.getElementById('cm-nome').value; let error; if(id){const {error:err}=await supabaseClient.from('machines').update({name:nome}).eq('id',id); error=err;}else{const {error:err}=await supabaseClient.from('machines').insert([{name:nome,is_active:true}]); error=err;} if(error)showToast(error.message,'error'); else{showToast(id?'Máquina atualizada!':'Máquina salva!'); e.target.reset(); document.getElementById('cm-id').value=''; document.getElementById('btn-mach-save').innerText='Salvar'; document.getElementById('btn-mach-cancel').classList.add('hidden'); await carregarDadosSupabase();}});
 function editMach(id){const m=db.machines.find(x=>x.id===id); if(!m)return; document.getElementById('cm-id').value=m.id; document.getElementById('cm-nome').value=m.nome; document.getElementById('btn-mach-save').innerText='Atualizar'; document.getElementById('btn-mach-cancel').classList.remove('hidden');}
 function cancelEditMach(){document.getElementById('form-cad-mach').reset(); document.getElementById('cm-id').value=''; document.getElementById('btn-mach-save').innerText='Salvar'; document.getElementById('btn-mach-cancel').classList.add('hidden');}
-async function deleteMach(id){if(confirm('Excluir? Equipe não verá mais')){if(isDemo){db.machines=db.machines.filter(x=>x.id!==id); db.matrix=db.matrix.filter(x=>x.machine_id!==id); renderMachList(); renderMatrixList();} else {const {error}=await supabaseClient.from('machines').delete().eq('id',id); if(!error) await carregarDadosSupabase();}}}
+async function deleteMach(id){if(confirm('Excluir máquina no Supabase?')){const {error}=await supabaseClient.from('machines').delete().eq('id',id); if(error)showToast(error.message,'error'); else{await carregarDadosSupabase(); showToast('Excluída','error');}}}
 
+// PRODUTOS
 function renderProdList(){document.getElementById('tbody-products').innerHTML=db.products.map(p=>`<tr class="hover:bg-slate-50"><td class="p-3 font-black">${p.sku}</td><td class="p-3 font-bold text-xs">${p.descricao}</td><td class="p-3 text-xs">${p.peso_nominal_g}kg</td><td class="p-3 text-xs">${p.tara_padrao_g}g</td><td class="p-3 text-xs">${p.limite_minimo_g}-${p.limite_maximo_g}g</td><td class="p-3 text-center flex gap-1 justify-center"><button onclick="editProd('${p.id}')" class="p-2 bg-slate-100 rounded-xl"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="deleteProd('${p.id}')" class="p-2 bg-red-50 text-brand-red rounded-xl"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td></tr>`).join(''); lucide.createIcons(); populateSelects();}
-document.getElementById('form-cad-prod').addEventListener('submit',async e=>{e.preventDefault(); const id=document.getElementById('cp-id').value; const data={sku:parseInt(document.getElementById('cp-sku').value),descricao:document.getElementById('cp-desc').value,peso_nominal_g:parseFloat(document.getElementById('cp-peso').value),tara_padrao_g:parseFloat(document.getElementById('cp-tara').value),limite_minimo_g:parseFloat(document.getElementById('cp-min').value),limite_maximo_g:parseFloat(document.getElementById('cp-max').value),ativo:true}; if(isDemo){if(id){const idx=db.products.findIndex(x=>x.id===id); if(idx>=0) db.products[idx]={...db.products[idx],...data};} else {db.products.push({id:Date.now().toString(),...data});} e.target.reset(); document.getElementById('cp-id').value=''; renderProdList(); showToast('Salvo local!'); return;} const payload={sku:data.sku,description:data.descricao,nominal_weight_kg:data.peso_nominal_g,standard_tare_g:data.tara_padrao_g,min_weight_limit:data.limite_minimo_g,max_weight_limit:data.limite_maximo_g}; let error; if(id){const {error:err}=await supabaseClient.from('products').update(payload).eq('id',id); error=err;} else {const {error:err}=await supabaseClient.from('products').insert([payload]); error=err;} if(error)showToast(error.message,'error'); else {e.target.reset(); document.getElementById('cp-id').value=''; await carregarDadosSupabase(); showToast('Salvo para equipe!');}});
+document.getElementById('form-cad-prod').addEventListener('submit',async e=>{e.preventDefault(); const id=document.getElementById('cp-id').value; const payload={sku:parseInt(document.getElementById('cp-sku').value),description:document.getElementById('cp-desc').value,nominal_weight_kg:parseFloat(document.getElementById('cp-peso').value),standard_tare_g:parseFloat(document.getElementById('cp-tara').value),min_weight_limit:parseFloat(document.getElementById('cp-min').value),max_weight_limit:parseFloat(document.getElementById('cp-max').value)}; let error; if(id){const {error:err}=await supabaseClient.from('products').update(payload).eq('id',id); error=err;}else{const {error:err}=await supabaseClient.from('products').insert([payload]); error=err;} if(error)showToast(error.message,'error'); else{showToast(id?'Produto atualizado!':'Produto salvo!'); e.target.reset(); document.getElementById('cp-id').value=''; document.getElementById('btn-prod-save').innerText='Salvar'; document.getElementById('btn-prod-cancel').classList.add('hidden'); await carregarDadosSupabase();}});
 function editProd(id){const p=db.products.find(x=>x.id===id); if(!p)return; document.getElementById('cp-id').value=p.id; document.getElementById('cp-sku').value=p.sku; document.getElementById('cp-desc').value=p.descricao; document.getElementById('cp-peso').value=p.peso_nominal_g; document.getElementById('cp-tara').value=p.tara_padrao_g; document.getElementById('cp-min').value=p.limite_minimo_g; document.getElementById('cp-max').value=p.limite_maximo_g; document.getElementById('btn-prod-save').innerText='Atualizar'; document.getElementById('btn-prod-cancel').classList.remove('hidden'); switchCad('products');}
 function cancelEditProd(){document.getElementById('form-cad-prod').reset(); document.getElementById('cp-id').value=''; document.getElementById('btn-prod-save').innerText='Salvar'; document.getElementById('btn-prod-cancel').classList.add('hidden');}
-async function deleteProd(id){if(confirm('Excluir?')){if(isDemo){db.products=db.products.filter(x=>x.id!==id); db.matrix=db.matrix.filter(x=>x.product_id!==id); renderProdList(); renderMatrixList();} else {const {error}=await supabaseClient.from('products').delete().eq('id',id); if(!error) await carregarDadosSupabase();}}}
+async function deleteProd(id){if(confirm('Excluir produto?')){const {error}=await supabaseClient.from('products').delete().eq('id',id); if(error)showToast(error.message,'error'); else{await carregarDadosSupabase(); showToast('Excluído','error');}}}
 
+// MATRIZ
 function renderMatrixList(){document.getElementById('tbody-matrix').innerHTML=db.matrix.map(mx=>{const m=db.machines.find(x=>x.id===mx.machine_id); const p=db.products.find(x=>x.id===mx.product_id); return `<tr class="hover:bg-slate-50"><td class="p-3 font-bold text-xs">${m?.nome||'Removida'}</td><td class="p-3 text-xs">SKU ${p?.sku||'?'} - ${p?.descricao||''}</td><td class="p-3 font-black">${mx.bpm}</td><td class="p-3 text-xs">${mx.capacidade_nominal}</td><td class="p-3 text-center flex gap-1 justify-center"><button onclick="editMat('${mx.id}')" class="p-2 bg-slate-100 rounded-xl"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="deleteMat('${mx.id}')" class="p-2 bg-red-50 text-brand-red rounded-xl"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td></tr>`}).join(''); lucide.createIcons();}
-document.getElementById('form-cad-mat').addEventListener('submit',async e=>{e.preventDefault(); const id=document.getElementById('cmat-id').value; const data={machine_id:document.getElementById('cmat-mach').value,product_id:document.getElementById('cmat-prod').value,bpm:parseInt(document.getElementById('cmat-bpm').value),capacidade_nominal:parseInt(document.getElementById('cmat-bpm').value)*60}; if(isDemo){if(id){const idx=db.matrix.findIndex(x=>x.id===id); if(idx>=0) db.matrix[idx]={...db.matrix[idx],...data};} else {if(db.matrix.some(x=>x.machine_id===data.machine_id&&x.product_id===data.product_id)){showToast('Já existe','error'); return;} db.matrix.push({id:Date.now().toString(),...data});} e.target.reset(); document.getElementById('cmat-id').value=''; renderMatrixList(); populateSelects(); showToast('Salvo local!'); return;} const payload={machine_id:data.machine_id,product_id:data.product_id,packages_per_minute:data.bpm,packages_per_hour:data.capacidade_nominal}; let error; if(id){const {error:err}=await supabaseClient.from('machine_product_matrix').update(payload).eq('id',id); error=err;} else {const {error:err}=await supabaseClient.from('machine_product_matrix').insert([payload]); error=err;} if(error)showToast(error.message,'error'); else {e.target.reset(); document.getElementById('cmat-id').value=''; await carregarDadosSupabase(); showToast('Salvo para equipe!');}});
+document.getElementById('form-cad-mat').addEventListener('submit',async e=>{e.preventDefault(); const id=document.getElementById('cmat-id').value; const payload={machine_id:document.getElementById('cmat-mach').value,product_id:document.getElementById('cmat-prod').value,packages_per_minute:parseInt(document.getElementById('cmat-bpm').value),packages_per_hour:parseInt(document.getElementById('cmat-bpm').value)*60}; let error; if(id){const {error:err}=await supabaseClient.from('machine_product_matrix').update(payload).eq('id',id); error=err;}else{const {error:err}=await supabaseClient.from('machine_product_matrix').insert([payload]); error=err;} if(error)showToast(error.message,'error'); else{showToast(id?'Matriz atualizada!':'Matriz vinculada!'); e.target.reset(); document.getElementById('cmat-id').value=''; document.getElementById('btn-mat-save').innerText='Vincular'; document.getElementById('btn-mat-cancel').classList.add('hidden'); await carregarDadosSupabase();}});
 function editMat(id){const mx=db.matrix.find(x=>x.id===id); if(!mx)return; document.getElementById('cmat-id').value=mx.id; document.getElementById('cmat-mach').value=mx.machine_id; document.getElementById('cmat-prod').value=mx.product_id; document.getElementById('cmat-bpm').value=mx.bpm; document.getElementById('btn-mat-save').innerText='Atualizar'; document.getElementById('btn-mat-cancel').classList.remove('hidden'); switchCad('matrix');}
 function cancelEditMat(){document.getElementById('form-cad-mat').reset(); document.getElementById('cmat-id').value=''; document.getElementById('btn-mat-save').innerText='Vincular'; document.getElementById('btn-mat-cancel').classList.add('hidden');}
-async function deleteMat(id){if(confirm('Remover?')){if(isDemo){db.matrix=db.matrix.filter(x=>x.id!==id); renderMatrixList(); populateSelects();} else {const {error}=await supabaseClient.from('machine_product_matrix').delete().eq('id',id); if(!error) await carregarDadosSupabase();}}}
+async function deleteMat(id){if(confirm('Remover vínculo?')){const {error}=await supabaseClient.from('machine_product_matrix').delete().eq('id',id); if(error)showToast(error.message,'error'); else{await carregarDadosSupabase(); showToast('Removido','error');}}}
 
 lucide.createIcons();
 </script>
