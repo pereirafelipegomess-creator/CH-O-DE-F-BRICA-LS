@@ -145,7 +145,7 @@
 lucide.createIcons();
 // CONFIG SUPABASE - TROQUE PELA SUA CHAVE NOVA APÓS ROTACIONAR
 const supabaseUrl = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SUPABASE_URL) ? import.meta.env.VITE_SUPABASE_URL : 'https://gbszjskmtzsrjxuvwdza.supabase.co';
-const supabaseKey = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SUPABASE_ANON_KEY) ? import.meta.env.VITE_SUPABASE_ANON_KEY : 'SUA_NOVA_ANON_KEY_AQUI';
+const supabaseKey = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SUPABASE_ANON_KEY) ? import.meta.env.VITE_SUPABASE_ANON_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdic3pqc2ttdHpzcmp4dnV3ZHphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxNjQ3MDEsImV4cCI6MjEwMjc0MDcwMX0.3mxovH2T5WO6P_e1Q1OGRvfVlTnrLHtr5KGx8VE324k';
 const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 let db={machines:[],products:[],matrix:[],logs:[],ocorrencias:[]};
